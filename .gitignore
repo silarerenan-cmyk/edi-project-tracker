@@ -1,3 +1,6 @@
+# Standalone Cursor skill kit (separate Git repository; see cursor-hypothesis-prototype-kit/PUBLISH.md)
+/cursor-hypothesis-prototype-kit/
+
 .DS_Store
 Thumbs.db
 .vscode/
