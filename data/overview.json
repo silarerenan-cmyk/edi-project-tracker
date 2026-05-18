@@ -1,5 +1,5 @@
 {
-  "name": "BEES Business Rules Engine (BRE)",
+  "name": "EDI Order Validator & Business Rules Engine",
   "tagline": "Order validation scope — translate and validate EDI orders inside BEES so retailers get feedback, NR is captured, and processes are standardized across markets.",
   "status": "In Discovery",
   "owner": "Your Name",
