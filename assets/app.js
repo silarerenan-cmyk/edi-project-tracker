@@ -7,7 +7,7 @@ const OVERLAY_PREFIX = STORAGE_PREFIX + 'overlay:';
 
 // Schema version — bump when data shape changes so cached `disk:*` snapshots are invalidated.
 // Overlays (manual additions / edits / deletions) are NEVER cleared by a version bump.
-const SCHEMA_VERSION = 10;
+const SCHEMA_VERSION = 11;
 
 // Sections whose `updates`/`tasks` arrays support manual overlays (add/edit/delete that survives a refresh).
 const OVERLAYABLE = {
@@ -858,7 +858,7 @@ async function addUpdate(prefill = {}) {
   const result = await openModal('Add update', [
     { label: 'Title', name: 'title', value: prefill.title || '', required: true },
     { label: 'Date', name: 'date', value: prefill.date || todayISO(), type: 'date' },
-    { label: 'Audience', name: 'audience', value: prefill.audience || 'Engineering', type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Other'] },
+    { label: 'Audience', name: 'audience', value: prefill.audience || 'Engineering', type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Product','Other'] },
     { label: 'Summary', name: 'summary', value: prefill.summary || '', type: 'textarea' },
     { label: 'Decisions (one per line)', name: 'decisions', value: (prefill.decisions || []).join('\n'), type: 'textarea' },
     { label: 'Action items (one per line)', name: 'actionItems', value: (prefill.actionItems || []).join('\n'), type: 'textarea' },
@@ -885,7 +885,7 @@ async function editUpdate(id) {
   const result = await openModal('Edit update', [
     { label: 'Title', name: 'title', value: u.title, required: true },
     { label: 'Date', name: 'date', value: u.date, type: 'date' },
-    { label: 'Audience', name: 'audience', value: u.audience, type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Other'] },
+    { label: 'Audience', name: 'audience', value: u.audience, type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Product','Other'] },
     { label: 'Summary', name: 'summary', value: u.summary, type: 'textarea' },
     { label: 'Decisions (one per line)', name: 'decisions', value: (u.decisions || []).join('\n'), type: 'textarea' },
     { label: 'Action items (one per line)', name: 'actionItems', value: (u.actionItems || []).join('\n'), type: 'textarea' },

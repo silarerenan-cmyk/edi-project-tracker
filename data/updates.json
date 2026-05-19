@@ -2,6 +2,42 @@
   "_comment": "Updates compiled from Granola meeting notes for the BRE initiative. epicKeys link an update to one or more epics/initiatives in epics.json (Jira keys).",
   "updates": [
     {
+      "id": "U-2026-05-15-sync-delay",
+      "date": "2026-05-15",
+      "audience": "Product",
+      "title": "BRE — Sprint status update & Sync contract delay",
+      "summary": "The Order Integration roadmap, originally set to conclude on June 9, has been pushed. The Sync team shifted their execution from Sprint 193 (May 18) to Sprint 194 (June 1) due to pending dependencies and validation gaps. This moved the BRE implementation to Sprint 195 and extended the delivery timeline to June 23. The EDI MVP Q2 scope now has no contingency margin, increasing delivery risk. Root cause: zones have not yet provided final feedback on the Sync contract. Teams are actively following up.",
+      "decisions": [
+        "Delivery of Order Integration (BEESEDI-48925) extended to June 23 — two weeks later than the original June 9 plan",
+        "Risk escalated: no contingency margin remaining for Q2 EDI MVP scope",
+        "Zone feedback on the Sync contract is the critical-path unblocking item"
+      ],
+      "actionItems": [
+        "Pamela / Renan: follow up with MX and AR zones for final Sync contract feedback — blocking Sprint 194 planning",
+        "Team: ensure all Sync contract validations are completed before Sprint 194 planning (starts ~June 1)",
+        "Pamela: continue reporting the Sync dependency pain point in weekly status updates"
+      ],
+      "epicKeys": ["BEESEDI-48925", "BEESIP-33217", "BEESIG-13405"]
+    },
+    {
+      "id": "U-2026-05-12-sprint93",
+      "date": "2026-05-12",
+      "audience": "Engineering",
+      "title": "BRE — Weekly checkpoint (Sprint 93)",
+      "summary": "Sprint 93 status review. BEESEDI-48925 (Order integration) advanced to SIT Tests after a joint validation session with the Cart Checkout team on May 12. BEESCR-27918 (Cart Service) reached Ready for Prod. BEESEDI-48956 (Purchase number uniqueness) slipped to June 9 due to missed capacity in Sprint 192. BEESIG-13405 (EDI Entity on BEES Sync) moved to In Story Detailing; Sync team contract implementation planned for Sprint 193 starting May 18.",
+      "decisions": [
+        "BEESEDI-48956 delivery date pushed from May 26 to June 9 due to Sprint 192 capacity miss",
+        "BEESCR-27918 is Ready for Prod following joint Cart + BRE validation on May 12",
+        "Sync contract implementation scheduled for Sprint 193 (May 18) — zones must confirm contract before planning"
+      ],
+      "actionItems": [
+        "Team: conduct joint validation session outcomes review and close remaining SIT issues on BEESEDI-48925",
+        "Pamela: track Sprint 193 Sync contract inclusion and escalate if zones delay feedback",
+        "Zones (MX / AR): provide final confirmation on the Sync contract before May 18 Sprint 193 planning"
+      ],
+      "epicKeys": ["BEESEDI-48925", "BEESCR-27918", "BEESEDI-48956", "BEESIG-13405", "BEESIP-33217"]
+    },
+    {
       "id": "U-2026-05-05-eric",
       "date": "2026-05-05",
       "audience": "Architecture",

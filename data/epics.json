@@ -22,7 +22,8 @@
     "In Production":                   "delivery",
     "Activated":                       "delivery",
     "Cancelled":                       "excluded",
-    "On Hold":                         "discovery"
+    "On Hold":                         "discovery",
+    "In Scoping":                      "discovery"
   },
 
   "initiatives": [
@@ -40,7 +41,7 @@
       "title": "EDI Order validator MVP — Layer 2 (Product level)",
       "summary": "SKU identification, packaging matching, and price compliance. Failure removes affected products from the order.",
       "owner": "Unassigned",
-      "status": "Backlog",
+      "status": "In Scoping",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIP-33218",
       "targetQuarter": "Q3"
     },
@@ -71,7 +72,7 @@
       "shortTitle": "Order integration",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In Development",
+      "status": "In SIT Tests",
       "owner": "Rhormens, Rafael",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48925",
       "targetQuarter": "Q2"
@@ -82,7 +83,7 @@
       "shortTitle": "Cart Service — process EDI orders",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In SIT Tests",
+      "status": "Ready for Prod",
       "owner": "Souza Rodrigues, Juliana",
       "url": "https://ab-inbev.atlassian.net/browse/BEESCR-27918",
       "targetQuarter": "Q2"
@@ -94,7 +95,7 @@
       "type": "Epic",
       "parentKey": "BEESIP-33217",
       "status": "Ready for High Level Solution",
-      "owner": "Soares Gonzalez, Natalia",
+      "owner": "Rhormens, Rafael",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48927",
       "targetQuarter": "Q2"
     },
@@ -104,8 +105,8 @@
       "shortTitle": "Delivery dates validation",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "Ready for High Level Solution",
-      "owner": "Sousa, Pamela",
+      "status": "In High Level Solution",
+      "owner": "Rhormens, Rafael",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48929",
       "targetQuarter": "Q2"
     },
@@ -115,8 +116,8 @@
       "shortTitle": "Purchase number uniqueness",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In Story Detailing",
-      "owner": "Soares Gonzalez, Natalia",
+      "status": "In Development",
+      "owner": "Sousa, Pamela",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48956",
       "targetQuarter": "Q2"
     },
@@ -126,8 +127,8 @@
       "shortTitle": "EDI Entity on BEES Sync",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "Open",
-      "owner": "Silva, Renan",
+      "status": "In Story Detailing",
+      "owner": "Soares Gonzalez, Natalia",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIG-13405",
       "targetQuarter": "Q2"
     },
@@ -148,7 +149,7 @@
       "shortTitle": "UPC matching",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
-      "status": "Backlog",
+      "status": "Ready for High Level Solution",
       "owner": "Unassigned",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48947",
       "targetQuarter": "Q3"

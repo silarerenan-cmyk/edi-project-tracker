@@ -3,9 +3,9 @@
   "tasks": [
     {
       "id": "NS-MX-POC-PLATFORM",
-      "task": "Resolve Solution A vs B for BEESEDI-48927 (Match POC identifier) with the platform team — currently blocking the epic",
-      "owner": "Renan / Platform team",
-      "due": "2026-05-06",
+      "task": "Resolve Solution A vs B for BEESEDI-48927 (Match POC identifier) with the platform team — epic still in Ready for High Level Solution pending final architecture decision",
+      "owner": "Rhormens, Rafael / Platform team",
+      "due": "2026-05-26",
       "status": "in_progress",
       "epicKeys": ["BEESEDI-48927"]
     },
@@ -14,7 +14,7 @@
       "task": "Run zone validation for the period transition (MX + AR)",
       "owner": "Renan",
       "due": "2026-05-08",
-      "status": "in_progress",
+      "status": "complete",
       "epicKeys": ["BEESIP-33217", "BEESIP-33218"]
     },
     {
@@ -30,7 +30,7 @@
       "task": "Update broker integration documentation to include pack size as a divisor field (Quantity ÷ Pack Size = units)",
       "owner": "Renan",
       "due": "2026-05-08",
-      "status": "in_progress",
+      "status": "complete",
       "epicKeys": ["BEESEDI-48954", "BEESEDI-48947"]
     },
     {
@@ -110,7 +110,7 @@
       "task": "Share Clamed documentation with Heraldo and Tanaka for BEES data-structure compatibility assessment",
       "owner": "Renan",
       "due": "2026-05-08",
-      "status": "in_progress",
+      "status": "complete",
       "epicKeys": ["BEESIP-31064"]
     },
     {
@@ -198,8 +198,40 @@
       "task": "Schedule a detailed story-review session (Renan + Zanella + Karen) aligned with Rhormens' technical solution",
       "owner": "Renan",
       "due": "2026-05-12",
-      "status": "not_started",
+      "status": "complete",
       "epicKeys": ["BEESIP-33217", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-SYNC-CONTRACT-ZONES",
+      "task": "Obtain final confirmation from MX and AR zones on the Sync contract — critical path for Sprint 194 planning (starts ~Jun 1). Delay risks further pushing BEESEDI-48925 delivery beyond June 23",
+      "owner": "Pamela / Renan",
+      "due": "2026-05-26",
+      "status": "in_progress",
+      "epicKeys": ["BEESEDI-48925", "BEESIG-13405", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-SIT-CLOSE-48925",
+      "task": "Close remaining SIT issues on BEESEDI-48925 (Order integration) and prepare for UAT test cycle following May 12 joint validation session with Cart Checkout team",
+      "owner": "Rhormens, Rafael",
+      "due": "2026-05-30",
+      "status": "in_progress",
+      "epicKeys": ["BEESEDI-48925"]
+    },
+    {
+      "id": "NS-SPRINT194-PLANNING",
+      "task": "Ensure BRE scope (BEESIG-13405 Sync contract implementation) is included in Sprint 194 planning; validate all pre-conditions are met before June 1",
+      "owner": "Pamela",
+      "due": "2026-05-29",
+      "status": "not_started",
+      "epicKeys": ["BEESIG-13405", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-BEESEDI-48947-HLS",
+      "task": "Advance BEESEDI-48947 (UPC matching) through the High Level Solution phase — epic moved from Backlog to Ready for HLS; assign owner and kick off HLS",
+      "owner": "Unassigned",
+      "due": "2026-06-15",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
     }
   ]
 }
