@@ -7,7 +7,7 @@ const OVERLAY_PREFIX = STORAGE_PREFIX + 'overlay:';
 
 // Schema version — bump when data shape changes so cached `disk:*` snapshots are invalidated.
 // Overlays (manual additions / edits / deletions) are NEVER cleared by a version bump.
-const SCHEMA_VERSION = 12;
+const SCHEMA_VERSION = 13;
 
 // Sections whose `updates`/`tasks` arrays support manual overlays (add/edit/delete that survives a refresh).
 const OVERLAYABLE = {
@@ -32,6 +32,19 @@ const ui = {
   scopeCountry: 'all',
   scopeGroup: 'all',
   roadmapTrack: 'all',
+  // Updates filters & pagination
+  updatesDateFilter: 'all',
+  updatesPage: 1,
+  updatesPerPage: 10,
+  // Next Steps — In Progress
+  stepsSort: 'due',
+  stepsOwnerFilter: '',
+  stepsEpicFilter: '',
+  stepsPage: 1,
+  stepsPerPage: 10,
+  // Next Steps — Completed
+  completedPage: 1,
+  completedPerPage: 10,
 };
 
 /* ------------------------- Persistence (overlay model) -------------------------
@@ -548,7 +561,7 @@ function openEpicPanel(key) {
       const actions = (u.actionItems || []).filter(Boolean);
       const detailsBlocks = [];
       if (decisions.length) {
-        detailsBlocks.push(`<div class="ep-update-section-label">Decisions</div><ul>${decisions.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`);
+        detailsBlocks.push(`<div class="ep-update-section-label">Highlights</div><ul>${decisions.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`);
       }
       if (actions.length) {
         detailsBlocks.push(`<div class="ep-update-section-label">Action items</div><ul>${actions.map(d => `<li>${escapeHtml(d)}</li>`).join('')}</ul>`);
@@ -562,7 +575,7 @@ function openEpicPanel(key) {
             <span class="ep-update-date">${escapeHtml(fmtDate(u.date))}</span>
           </div>
           <div class="ep-update-summary">${escapeHtml(u.summary || '')}</div>
-          ${moreCount ? `<details><summary>Decisions &amp; action items (${moreCount})</summary>${detailsBlocks.join('')}</details>` : ''}
+          ${moreCount ? `<details><summary>Highlights &amp; action items (${moreCount})</summary>${detailsBlocks.join('')}</details>` : ''}
         </div>
       `;
     }).join('');
@@ -795,26 +808,84 @@ function setRing(svgId, percent) {
   document.getElementById(svgId.replace('Ring', 'RingText')).textContent = `${percent}%`;
 }
 
+/* ------------------------- Pagination helper ------------------------- */
+
+function renderPaginationBar(containerId, page, totalItems, perPage, onPageFn) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  const toShow = new Set(
+    [1, totalPages, page, page - 1, page + 1].filter(p => p >= 1 && p <= totalPages)
+  );
+  const sorted = [...toShow].sort((a, b) => a - b);
+
+  let html = `<div class="pg-bar">`;
+  html += `<button class="btn btn-icon pg-btn" ${page <= 1 ? 'disabled' : ''} data-pg="${page - 1}" aria-label="Previous">‹</button>`;
+  let prev = 0;
+  for (const p of sorted) {
+    if (prev && p - prev > 1) html += `<span class="pg-ellipsis">…</span>`;
+    html += `<button class="btn btn-icon pg-btn${p === page ? ' is-active' : ''}" data-pg="${p}">${p}</button>`;
+    prev = p;
+  }
+  html += `<button class="btn btn-icon pg-btn" ${page >= totalPages ? 'disabled' : ''} data-pg="${page + 1}" aria-label="Next">›</button>`;
+  html += `<span class="pg-info">${totalItems} item${totalItems !== 1 ? 's' : ''} · page ${page} of ${totalPages}</span>`;
+  html += `</div>`;
+
+  el.innerHTML = html;
+  el.querySelectorAll('.pg-btn:not([disabled])').forEach(btn => {
+    btn.addEventListener('click', () => onPageFn(Number(btn.dataset.pg)));
+  });
+}
+
 /* ------------------------- Updates ------------------------- */
 
 function renderUpdates() {
-  const filter = $('#updatesFilter').value;
-  const list = $('#updatesList');
-  list.innerHTML = '';
-  const updates = (state.updates?.updates || [])
+  const audienceFilter = $('#updatesFilter').value;
+
+  // Date cutoff
+  let cutoff = null;
+  if (ui.updatesDateFilter !== 'all') {
+    cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - Number(ui.updatesDateFilter));
+    cutoff.setHours(0, 0, 0, 0);
+  }
+
+  const all = (state.updates?.updates || [])
     .slice()
     .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
-    .filter(u => filter === 'all' || u.audience === filter);
+    .filter(u => {
+      if (audienceFilter !== 'all' && u.audience !== audienceFilter) return false;
+      if (cutoff) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(u.date || '');
+        const d = m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;
+        if (!d || d < cutoff) return false;
+      }
+      return true;
+    });
 
-  if (!updates.length) {
-    list.innerHTML = `<li style="color:var(--text-muted)">No updates yet.</li>`;
+  const perPage = ui.updatesPerPage;
+  const totalItems = all.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
+  if (ui.updatesPage > totalPages) ui.updatesPage = totalPages;
+  const start = (ui.updatesPage - 1) * perPage;
+  const updates = all.slice(start, start + perPage);
+
+  const list = $('#updatesList');
+  list.innerHTML = '';
+  const pgBar = document.getElementById('updatesPagination');
+
+  if (!all.length) {
+    list.innerHTML = `<li style="color:var(--text-muted)">No updates match the current filters.</li>`;
+    if (pgBar) pgBar.innerHTML = '';
     return;
   }
 
   for (const u of updates) {
     const li = document.createElement('li');
     li.className = 'update';
-    const decisions = (u.decisions || []).map(d => `<li>${escapeHtml(d)}</li>`).join('');
+    const highlights = (u.decisions || []).map(d => `<li>${escapeHtml(d)}</li>`).join('');
     const actions = (u.actionItems || []).map(d => `<li>${escapeHtml(d)}</li>`).join('');
     const keys = epicKeysForUpdate(u);
     const chips = keys.length
@@ -828,7 +899,7 @@ function renderUpdates() {
       </div>
       <div class="update-summary">${escapeHtml(u.summary || '')}</div>
       ${chips}
-      ${decisions ? `<div class="update-section"><strong>Decisions</strong><ul>${decisions}</ul></div>` : ''}
+      ${highlights ? `<div class="update-section"><strong>Highlights</strong><ul>${highlights}</ul></div>` : ''}
       ${actions ? `<div class="update-section"><strong>Action items</strong><ul>${actions}</ul></div>` : ''}
       <div class="update-section update-actions">
         <button class="btn btn-icon" data-act="edit-update" data-id="${u.id}">Edit</button>
@@ -837,6 +908,11 @@ function renderUpdates() {
     `;
     list.appendChild(li);
   }
+
+  renderPaginationBar('updatesPagination', ui.updatesPage, totalItems, perPage, (p) => {
+    ui.updatesPage = p;
+    renderUpdates();
+  });
 }
 
 function parseEpicKeysInput(s) {
@@ -860,7 +936,7 @@ async function addUpdate(prefill = {}) {
     { label: 'Date', name: 'date', value: prefill.date || todayISO(), type: 'date' },
     { label: 'Audience', name: 'audience', value: prefill.audience || 'Engineering', type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Product','Other'] },
     { label: 'Summary', name: 'summary', value: prefill.summary || '', type: 'textarea' },
-    { label: 'Decisions (one per line)', name: 'decisions', value: (prefill.decisions || []).join('\n'), type: 'textarea' },
+    { label: 'Highlights (one per line)', name: 'decisions', value: (prefill.decisions || []).join('\n'), type: 'textarea' },
     { label: 'Action items (one per line)', name: 'actionItems', value: (prefill.actionItems || []).join('\n'), type: 'textarea' },
     { label: 'Linked epics (comma-separated keys, e.g. BEESEDI-48927)', name: 'epicKeys', value: (prefill.epicKeys || []).join(', ') },
   ]);
@@ -887,7 +963,7 @@ async function editUpdate(id) {
     { label: 'Date', name: 'date', value: u.date, type: 'date' },
     { label: 'Audience', name: 'audience', value: u.audience, type: 'select', options: ['Engineering','Architecture','Commercial','Partners','Product','Other'] },
     { label: 'Summary', name: 'summary', value: u.summary, type: 'textarea' },
-    { label: 'Decisions (one per line)', name: 'decisions', value: (u.decisions || []).join('\n'), type: 'textarea' },
+    { label: 'Highlights (one per line)', name: 'decisions', value: (u.decisions || []).join('\n'), type: 'textarea' },
     { label: 'Action items (one per line)', name: 'actionItems', value: (u.actionItems || []).join('\n'), type: 'textarea' },
     { label: 'Linked epics (comma-separated keys, e.g. BEESEDI-48927)', name: 'epicKeys', value: (u.epicKeys || []).join(', ') },
   ]);
@@ -942,31 +1018,116 @@ function dueClass(due) {
 }
 
 function renderNextSteps() {
+  const allTasks = state['next-steps']?.tasks || [];
+
+  // Split by status
+  const inProgressAll = allTasks.filter(t => t.status !== 'complete');
+  const completedAll  = allTasks.filter(t => t.status === 'complete');
+
+  // Apply filters to in-progress
+  const ownerF = ui.stepsOwnerFilter.toLowerCase().trim();
+  const epicF  = ui.stepsEpicFilter.toLowerCase().trim();
+  const filtered = inProgressAll.filter(t => {
+    if (ownerF && !(t.owner || '').toLowerCase().includes(ownerF)) return false;
+    if (epicF) {
+      const keys = epicKeysForTask(t).map(k => k.toLowerCase());
+      if (!keys.some(k => k.includes(epicF))) return false;
+    }
+    return true;
+  });
+
+  // Sort in-progress
+  if (ui.stepsSort === 'status') {
+    const order = { in_progress: 0, not_started: 1 };
+    filtered.sort((a, b) => {
+      const d = (order[a.status] ?? 2) - (order[b.status] ?? 2);
+      return d !== 0 ? d : (a.due || '').localeCompare(b.due || '');
+    });
+  } else {
+    filtered.sort((a, b) => {
+      if (!a.due && !b.due) return 0;
+      if (!a.due) return 1;
+      if (!b.due) return -1;
+      return a.due.localeCompare(b.due);
+    });
+  }
+
+  // Update counts
+  $('#stepsInProgressCount').textContent = filtered.length;
+  $('#completedCount').textContent = completedAll.length;
+
+  // ---- In-progress pagination ----
+  const ipPerPage = ui.stepsPerPage;
+  const ipTotal   = filtered.length;
+  const ipPages   = Math.max(1, Math.ceil(ipTotal / ipPerPage));
+  if (ui.stepsPage > ipPages) ui.stepsPage = ipPages;
+  const ipSlice = filtered.slice((ui.stepsPage - 1) * ipPerPage, ui.stepsPage * ipPerPage);
+
   const tbody = $('#nextStepsBody');
   tbody.innerHTML = '';
-  const tasks = (state['next-steps']?.tasks || []).slice().sort((a, b) => (a.due || '').localeCompare(b.due || ''));
-  if (!tasks.length) {
-    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted)">No tasks yet.</td></tr>`;
-    return;
+  if (!ipSlice.length) {
+    const msg = inProgressAll.length === 0 ? 'No open tasks.' : 'No tasks match the current filters.';
+    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted)">${msg}</td></tr>`;
+  } else {
+    for (const t of ipSlice) {
+      const tr = document.createElement('tr');
+      const keys = epicKeysForTask(t);
+      const chips = keys.length
+        ? `<div class="linked-epics">${keys.map(k => `<span class="linked-epic-chip" data-key="${escapeHtml(k)}" title="Open epic panel">${escapeHtml(k)}</span>`).join('')}</div>`
+        : '';
+      tr.innerHTML = `
+        <td>${escapeHtml(t.task)}${chips}</td>
+        <td>${escapeHtml(t.owner || '—')}</td>
+        <td class="${dueClass(t.due)}">${fmtDate(t.due) || '—'}</td>
+        <td><span class="chip ${STATUS_CHIP[t.status] || 'grey'}">${STATUS_LABELS[t.status] || t.status || '—'}</span></td>
+        <td style="text-align:right; white-space:nowrap;">
+          <button class="btn btn-icon" data-act="edit-step" data-id="${escapeHtml(t.id)}">Edit</button>
+          <button class="btn btn-icon btn-danger" data-act="del-step" data-id="${escapeHtml(t.id)}">Delete</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    }
   }
-  for (const t of tasks) {
-    const tr = document.createElement('tr');
-    const keys = epicKeysForTask(t);
-    const chips = keys.length
-      ? `<div class="linked-epics">${keys.map(k => `<span class="linked-epic-chip" data-key="${escapeHtml(k)}" title="Open epic panel">${escapeHtml(k)}</span>`).join('')}</div>`
-      : '';
-    tr.innerHTML = `
-      <td>${escapeHtml(t.task)}${chips}</td>
-      <td>${escapeHtml(t.owner || '—')}</td>
-      <td class="${dueClass(t.due)}">${fmtDate(t.due) || '—'}</td>
-      <td><span class="chip ${STATUS_CHIP[t.status] || 'grey'}">${STATUS_LABELS[t.status] || t.status || '—'}</span></td>
-      <td style="text-align:right; white-space:nowrap;">
-        <button class="btn btn-icon" data-act="edit-step" data-id="${t.id}">Edit</button>
-        <button class="btn btn-icon btn-danger" data-act="del-step" data-id="${t.id}">Delete</button>
-      </td>
-    `;
-    tbody.appendChild(tr);
+  renderPaginationBar('stepsPagination', ui.stepsPage, ipTotal, ipPerPage, (p) => {
+    ui.stepsPage = p;
+    renderNextSteps();
+  });
+
+  // ---- Completed pagination ----
+  const cPerPage = ui.completedPerPage;
+  const cSorted  = completedAll.slice().sort((a, b) => (b.due || '').localeCompare(a.due || ''));
+  const cTotal   = cSorted.length;
+  const cPages   = Math.max(1, Math.ceil(cTotal / cPerPage));
+  if (ui.completedPage > cPages) ui.completedPage = cPages;
+  const cSlice = cSorted.slice((ui.completedPage - 1) * cPerPage, ui.completedPage * cPerPage);
+
+  const cbody = $('#completedBody');
+  cbody.innerHTML = '';
+  if (!cSlice.length) {
+    cbody.innerHTML = `<tr><td colspan="4" style="color:var(--text-muted)">No completed tasks yet.</td></tr>`;
+  } else {
+    for (const t of cSlice) {
+      const tr = document.createElement('tr');
+      const keys = epicKeysForTask(t);
+      const chips = keys.length
+        ? `<div class="linked-epics">${keys.map(k => `<span class="linked-epic-chip" data-key="${escapeHtml(k)}" title="Open epic panel">${escapeHtml(k)}</span>`).join('')}</div>`
+        : '';
+      tr.innerHTML = `
+        <td>${escapeHtml(t.task)}${chips}</td>
+        <td>${escapeHtml(t.owner || '—')}</td>
+        <td>${fmtDate(t.due) || '—'}</td>
+        <td style="text-align:right; white-space:nowrap;">
+          <button class="btn btn-icon" data-act="edit-step" data-id="${escapeHtml(t.id)}">Edit</button>
+          <button class="btn btn-icon btn-danger" data-act="del-step" data-id="${escapeHtml(t.id)}">Delete</button>
+        </td>
+      `;
+      cbody.appendChild(tr);
+    }
   }
+  renderPaginationBar('completedPagination', ui.completedPage, cTotal, cPerPage, (p) => {
+    ui.completedPage = p;
+    renderNextSteps();
+  });
 }
 
 async function addNextStep() {
@@ -1100,7 +1261,25 @@ function setupEvents() {
   });
 
   $('#addUpdateBtn').addEventListener('click', () => addUpdate());
-  $('#updatesFilter').addEventListener('change', renderUpdates);
+
+  $('#updatesFilter').addEventListener('change', () => { ui.updatesPage = 1; renderUpdates(); });
+
+  $$('.date-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('.date-filter-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      ui.updatesDateFilter = btn.dataset.date;
+      ui.updatesPage = 1;
+      renderUpdates();
+    });
+  });
+
+  $('#updatesPerPage').addEventListener('change', e => {
+    ui.updatesPerPage = Number(e.target.value);
+    ui.updatesPage = 1;
+    renderUpdates();
+  });
+
   $('#updates').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-act]');
     if (!btn) return;
@@ -1109,6 +1288,35 @@ function setupEvents() {
   });
 
   $('#addStepBtn').addEventListener('click', addNextStep);
+
+  ['stepsOwnerFilter', 'stepsEpicFilter'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', () => {
+      ui[id] = el.value;
+      ui.stepsPage = 1;
+      renderNextSteps();
+    });
+  });
+
+  $('#stepsSort').addEventListener('change', e => {
+    ui.stepsSort = e.target.value;
+    ui.stepsPage = 1;
+    renderNextSteps();
+  });
+
+  $('#stepsPerPage').addEventListener('change', e => {
+    ui.stepsPerPage = Number(e.target.value);
+    ui.stepsPage = 1;
+    renderNextSteps();
+  });
+
+  $('#completedPerPage').addEventListener('change', e => {
+    ui.completedPerPage = Number(e.target.value);
+    ui.completedPage = 1;
+    renderNextSteps();
+  });
+
   $('#next-steps').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-act]');
     if (!btn) return;

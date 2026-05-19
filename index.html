@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EDI Project Tracker</title>
-  <link rel="stylesheet" href="assets/styles.css?v=12" />
+  <link rel="stylesheet" href="assets/styles.css?v=13" />
 </head>
 <body>
   <header class="topbar">
@@ -168,18 +168,34 @@
         </div>
       </div>
       <div class="updates-toolbar">
-        <label>Filter:
-          <select id="updatesFilter">
-            <option value="all">All</option>
-            <option>Engineering</option>
-            <option>Architecture</option>
-            <option>Commercial</option>
-            <option>Partners</option>
-            <option>Product</option>
-          </select>
-        </label>
+        <div class="ut-row">
+          <label>Audience:
+            <select id="updatesFilter">
+              <option value="all">All</option>
+              <option>Engineering</option>
+              <option>Architecture</option>
+              <option>Commercial</option>
+              <option>Partners</option>
+              <option>Product</option>
+            </select>
+          </label>
+          <div class="date-filter-group" role="group" aria-label="Date range">
+            <button class="btn btn-ghost date-filter-btn is-active" data-date="all">All time</button>
+            <button class="btn btn-ghost date-filter-btn" data-date="30">Last 30 days</button>
+            <button class="btn btn-ghost date-filter-btn" data-date="15">Last 15 days</button>
+            <button class="btn btn-ghost date-filter-btn" data-date="7">Last 7 days</button>
+          </div>
+          <label class="ut-perpg">Per page:
+            <select id="updatesPerPage">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
       </div>
       <ul id="updatesList" class="updates-list"></ul>
+      <div class="pagination-bar" id="updatesPagination"></div>
     </section>
 
     <!-- 5. NEXT STEPS -->
@@ -194,10 +210,59 @@
           <button class="btn" id="addStepBtn">+ Add task</button>
         </div>
       </div>
+
+      <!-- In progress sub-section -->
+      <div class="ns-section-head">
+        <span class="dot dot-blue"></span>
+        <span class="ns-section-label">In progress</span>
+        <span class="count" id="stepsInProgressCount">0</span>
+      </div>
+      <div class="ns-toolbar">
+        <input type="text" id="stepsOwnerFilter" placeholder="Filter by owner…" class="ns-filter-input" />
+        <input type="text" id="stepsEpicFilter" placeholder="Filter by Jira issue…" class="ns-filter-input" />
+        <label>Sort:
+          <select id="stepsSort">
+            <option value="due">Due date</option>
+            <option value="status">Status</option>
+          </select>
+        </label>
+        <label class="ns-perpg">Per page:
+          <select id="stepsPerPage">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+        </label>
+      </div>
       <table class="next-steps-table">
         <thead><tr><th>Task</th><th>Owner</th><th>Due</th><th>Status</th><th></th></tr></thead>
         <tbody id="nextStepsBody"></tbody>
       </table>
+      <div class="pagination-bar" id="stepsPagination"></div>
+
+      <!-- Completed sub-section -->
+      <details class="ns-completed-details" id="completedDetails">
+        <summary class="ns-section-head ns-completed-summary">
+          <span class="dot dot-green"></span>
+          <span class="ns-section-label">Completed</span>
+          <span class="count" id="completedCount">0</span>
+          <span class="summary-hint">Click to expand</span>
+        </summary>
+        <div class="ns-toolbar ns-completed-toolbar">
+          <label>Per page:
+            <select id="completedPerPage">
+              <option value="10">10</option>
+              <option value="25">25</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
+        <table class="next-steps-table">
+          <thead><tr><th>Task</th><th>Owner</th><th>Due</th><th></th></tr></thead>
+          <tbody id="completedBody"></tbody>
+        </table>
+        <div class="pagination-bar" id="completedPagination"></div>
+      </details>
     </section>
 
   </main>
@@ -237,6 +302,6 @@
     </div>
   </aside>
 
-  <script src="assets/app.js?v=12" type="module"></script>
+  <script src="assets/app.js?v=13" type="module"></script>
 </body>
 </html>
