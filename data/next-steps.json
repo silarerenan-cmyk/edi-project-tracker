@@ -227,11 +227,51 @@
     },
     {
       "id": "NS-BEESEDI-48947-HLS",
-      "task": "Advance BEESEDI-48947 (UPC matching) through the High Level Solution phase — epic moved from Backlog to Ready for HLS; assign owner and kick off HLS",
-      "owner": "Unassigned",
-      "due": "2026-06-15",
+      "task": "Advance BEESEDI-48947 (UPC matching) through the High Level Solution phase — HLR complete (May 19), architecture diagrams pending; stories BEESEDI-52094..52102 ready for estimation",
+      "owner": "Rhormens, Rafael / Architecture",
+      "due": "2026-05-30",
+      "status": "in_progress",
+      "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-UPC-STORIES-PLAN",
+      "task": "Estimate and plan user stories BEESEDI-52094..52102 (UPC Matching) into sprint schedule — 9 stories covering toggle, CRUD, catalog lookup, POC fallback, ambiguous hold, blacklist, logging, retry",
+      "owner": "Karen / Engineering",
+      "due": "2026-06-01",
       "status": "not_started",
       "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-PRD-COSMO-CONFIG",
+      "task": "Configure Cosmo credentials in PRD environment (SIT and UAT already done in Sprint 192 — PRD instance generated but not configured)",
+      "owner": "Zanella, Rafael",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48925", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-3P-DISCOVERY-INTERVIEWS",
+      "task": "Schedule and conduct discovery interviews for 3P EDI (L'Oréal commercial team, KAMs, Ops, Pharmalink/Cosmos contacts) — discovery doc published May 15",
+      "owner": "Renan",
+      "due": "2026-06-15",
+      "status": "not_started",
+      "epicKeys": ["BEESIP-31064"]
+    },
+    {
+      "id": "NS-3P-ARCH-GAP",
+      "task": "Produce 3P vs. 1P architecture gap analysis: what needs to be extended vs. reused from link-edi-orders-orchestrator for Brazil 3P vendor configurations",
+      "owner": "Architecture / Renan",
+      "due": "2026-06-30",
+      "status": "not_started",
+      "epicKeys": ["BEESIP-31064"]
+    },
+    {
+      "id": "NS-L2-DISCOVERY-ASSIGN",
+      "task": "Assign product and engineering owners for BEESEDI-48954 (Packaging matching) and BEESEDI-48955 (Price range validation) — both moved to In Product Discovery on May 19",
+      "owner": "Renan / Pamela",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48954", "BEESEDI-48955", "BEESIP-33218"]
     }
   ]
 }

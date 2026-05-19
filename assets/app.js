@@ -7,7 +7,7 @@ const OVERLAY_PREFIX = STORAGE_PREFIX + 'overlay:';
 
 // Schema version — bump when data shape changes so cached `disk:*` snapshots are invalidated.
 // Overlays (manual additions / edits / deletions) are NEVER cleared by a version bump.
-const SCHEMA_VERSION = 11;
+const SCHEMA_VERSION = 12;
 
 // Sections whose `updates`/`tasks` arrays support manual overlays (add/edit/delete that survives a refresh).
 const OVERLAYABLE = {

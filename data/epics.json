@@ -23,7 +23,8 @@
     "Activated":                       "delivery",
     "Cancelled":                       "excluded",
     "On Hold":                         "discovery",
-    "In Scoping":                      "discovery"
+    "In Scoping":                      "discovery",
+    "In Product Discovery":            "discovery"
   },
 
   "initiatives": [
@@ -171,7 +172,7 @@
       "shortTitle": "Packaging matching",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
-      "status": "Backlog",
+      "status": "In Product Discovery",
       "owner": "Unassigned",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48954",
       "targetQuarter": "Q3"
@@ -182,7 +183,7 @@
       "shortTitle": "Price range validation",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
-      "status": "Backlog",
+      "status": "In Product Discovery",
       "owner": "Unassigned",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48955",
       "targetQuarter": "Q3"

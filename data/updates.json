@@ -2,6 +2,64 @@
   "_comment": "Updates compiled from Granola meeting notes for the BRE initiative. epicKeys link an update to one or more epics/initiatives in epics.json (Jira keys).",
   "updates": [
     {
+      "id": "U-2026-05-19-upc-hlr",
+      "date": "2026-05-19",
+      "audience": "Product",
+      "title": "HLR complete — BEESEDI-48947 UPC Matching (L2 stories written)",
+      "summary": "The High Level Requirements document for BEESEDI-48947 (UPC/EAN Matching) was finalized today with 9 implementation user stories (BEESEDI-52094..52102). The HLR covers strict and relaxed matching paths, POC-level mapping CRUD, catalog-first lookup with fallback to mapping layer, ambiguous match handling with curation hold, retailer blacklist, retry logic, and a full structured logging taxonomy. BEESEDI-48947 is now in Ready for High Level Solution and the epic is unblocked for development estimation.",
+      "decisions": [
+        "Strict path: per-line rejection of unmatched lines; full-order rejection if zero matches",
+        "Relaxed path: toggle-disabled or retailer-blacklisted retailers skip UPC matching entirely",
+        "Ambiguous matches held until curation resolves or order expiration — no arbitrary selection",
+        "Toggle key for this rule: SKU_MATCHING, following the existing BRE toggle infrastructure pattern",
+        "Catalog lookup always takes priority over POC mapping — mapping cannot override a catalog match"
+      ],
+      "actionItems": [
+        "Engineering: estimate and plan stories BEESEDI-52094..52102 for sprint scheduling",
+        "Architecture: add component diagrams to the HLR (toggle layer, resolution pipeline, mapping store, curation hold)",
+        "Renan: confirm curation expiration mechanism with architecture (scheduled job vs. event-driven)"
+      ],
+      "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
+    },
+    {
+      "id": "U-2026-05-15-3p-discovery",
+      "date": "2026-05-15",
+      "audience": "Product",
+      "title": "3P EDI discovery kicked off — BEES as EDI broker for L'Oréal BR",
+      "summary": "Discovery page for '[EDI/BRE] BEES EDI for 3P Orders' published to BLK Confluence. The initiative targets enabling BEES as an EDI broker for 3P principals, starting with L'Oréal BR pharmacy banners (DPC, Panpharma/GSC, Solfarma, RealDec) via Pharmalink, Cosmos, and Neogrid. GMV opportunity: USD 60M+ currently disconnected from BEES. Key insight: 88 of 93 Droga Leste stores order via EDI daily; Drogaria Carrefour has 19 years of fully EDI-based ordering. The solution will reuse and extend the existing EDI Order Validator MVP infrastructure built for 1P (MX/AR).",
+      "decisions": [
+        "L'Oréal BR is the pilot — DPC, Panpharma/GSC, Solfarma, RealDec as first partners",
+        "Pharmalink is the priority broker; Cosmos and Neogrid to follow",
+        "Parallel run strategy during pilot: BEES + existing broker simultaneously until success gates are met",
+        "Reuse link-edi-orders-orchestrator service and extend for 3P vendor configurations",
+        "Out of scope for this phase: decommissioning legacy brokers, pricing recalculation, non-Brazil markets"
+      ],
+      "actionItems": [
+        "Renan: align on product owner and engineering manager for 3P EDI discovery",
+        "Renan: schedule discovery interviews with L'Oréal commercial team, KAMs, Ops, and Pharmalink",
+        "Team: produce 3P vs. 1P architecture gap analysis (what needs to be extended vs. reused)",
+        "Renan: define broker connectivity specs per broker (FTP/SFTP vs. API)"
+      ],
+      "epicKeys": ["BEESIP-31064"]
+    },
+    {
+      "id": "U-2026-05-14-sprint192",
+      "date": "2026-05-14",
+      "audience": "Engineering",
+      "title": "Sprint 192 Review — EDI/BRE (Nayru, May 4–15)",
+      "summary": "Sprint 192 closed covering BEESEDI-48925 (Order Integration) and BEESEDI-48956 (PO Uniqueness). Key deliveries: order transparency mapped in SIT and UAT (BEESEDI-52028), Cosmo credentials configured in SIT and UAT environments (BEESEDI-51313), payload template CRUD API implemented and tested with end-to-end curl evidence (BEESEDI-50534), order entrypoint endpoint validated in MongoDB (BEESEDI-51479), logging standards configured as foundation for observability (BEESEDI-50720), and a bug fix for toggle rule persistence removing the Spring @Transaction dependency on MongoDB (BEESEDI-52008). PRD instance for Cosmo credentials generated but not yet configured.",
+      "decisions": [
+        "Toggle rule persistence refactored to single-document approach (no MongoDB transactions) — same pattern applied to order persistence",
+        "Order transparency endpoint mapped to SIT and UAT via gitops-workload-link",
+        "PRD environment Cosmo configuration deferred to next sprint"
+      ],
+      "actionItems": [
+        "Zanella, Rafael: configure Cosmo credentials in PRD environment",
+        "Team: ensure BEESEDI-48956 delivery moves from June 9 (after Sprint 192 capacity miss) — monitor Sprint 193 execution"
+      ],
+      "epicKeys": ["BEESEDI-48925", "BEESEDI-48956", "BEESIP-33217"]
+    },
+    {
       "id": "U-2026-05-15-sync-delay",
       "date": "2026-05-15",
       "audience": "Product",
