@@ -7,7 +7,7 @@ const OVERLAY_PREFIX = STORAGE_PREFIX + 'overlay:';
 
 // Schema version — bump when data shape changes so cached `disk:*` snapshots are invalidated.
 // Overlays (manual additions / edits / deletions) are NEVER cleared by a version bump.
-const SCHEMA_VERSION = 13;
+const SCHEMA_VERSION = 14;
 
 // Sections whose `updates`/`tasks` arrays support manual overlays (add/edit/delete that survives a refresh).
 const OVERLAYABLE = {
@@ -1076,7 +1076,10 @@ function renderNextSteps() {
         ? `<div class="linked-epics">${keys.map(k => `<span class="linked-epic-chip" data-key="${escapeHtml(k)}" title="Open epic panel">${escapeHtml(k)}</span>`).join('')}</div>`
         : '';
       tr.innerHTML = `
-        <td>${escapeHtml(t.task)}${chips}</td>
+        <td>
+          ${escapeHtml(t.task)}${chips}
+          ${t.description ? `<div class="ns-task-desc">${escapeHtml(t.description)}</div>` : ''}
+        </td>
         <td>${escapeHtml(t.owner || '—')}</td>
         <td class="${dueClass(t.due)}">${fmtDate(t.due) || '—'}</td>
         <td><span class="chip ${STATUS_CHIP[t.status] || 'grey'}">${STATUS_LABELS[t.status] || t.status || '—'}</span></td>
@@ -1095,7 +1098,7 @@ function renderNextSteps() {
 
   // ---- Completed pagination ----
   const cPerPage = ui.completedPerPage;
-  const cSorted  = completedAll.slice().sort((a, b) => (b.due || '').localeCompare(a.due || ''));
+  const cSorted  = completedAll.slice().sort((a, b) => (b.completedDate || b.due || '').localeCompare(a.completedDate || a.due || ''));
   const cTotal   = cSorted.length;
   const cPages   = Math.max(1, Math.ceil(cTotal / cPerPage));
   if (ui.completedPage > cPages) ui.completedPage = cPages;
@@ -1113,9 +1116,12 @@ function renderNextSteps() {
         ? `<div class="linked-epics">${keys.map(k => `<span class="linked-epic-chip" data-key="${escapeHtml(k)}" title="Open epic panel">${escapeHtml(k)}</span>`).join('')}</div>`
         : '';
       tr.innerHTML = `
-        <td>${escapeHtml(t.task)}${chips}</td>
+        <td>
+          ${escapeHtml(t.task)}${chips}
+          ${t.description ? `<div class="ns-task-desc">${escapeHtml(t.description)}</div>` : ''}
+        </td>
         <td>${escapeHtml(t.owner || '—')}</td>
-        <td>${fmtDate(t.due) || '—'}</td>
+        <td>${fmtDate(t.completedDate || t.due) || '—'}</td>
         <td style="text-align:right; white-space:nowrap;">
           <button class="btn btn-icon" data-act="edit-step" data-id="${escapeHtml(t.id)}">Edit</button>
           <button class="btn btn-icon btn-danger" data-act="del-step" data-id="${escapeHtml(t.id)}">Delete</button>
@@ -1133,6 +1139,7 @@ function renderNextSteps() {
 async function addNextStep() {
   const result = await openModal('Add task', [
     { label: 'Task', name: 'task', required: true },
+    { label: 'Description', name: 'description', type: 'textarea', placeholder: 'Additional context, actions, decisions…' },
     { label: 'Owner', name: 'owner' },
     { label: 'Due date', name: 'due', type: 'date' },
     { label: 'Status', name: 'status', type: 'select', options: [
@@ -1143,23 +1150,36 @@ async function addNextStep() {
     { label: 'Linked epics (comma-separated keys, e.g. BEESEDI-48927)', name: 'epicKeys', value: '' },
   ]);
   if (!result || !result.task) return;
+
+  const isComplete = result.status === 'complete';
+  const completedDate = isComplete ? todayISO() : '';
+
   state['next-steps'].tasks.push({
     id: uid('NS'),
     task: result.task,
+    description: result.description || '',
     owner: result.owner,
     due: result.due,
     status: result.status,
+    completedDate,
     epicKeys: parseEpicKeysInput(result.epicKeys),
   });
   saveSection('next-steps');
+
+  if (isComplete) {
+    autoCreateUpdateFromTask({ task: result.task, description: result.description, epicKeys: result.epicKeys, completedDate });
+  }
   renderAll();
 }
 
 async function editNextStep(id) {
   const t = state['next-steps'].tasks.find(x => x.id === id);
   if (!t) return;
+  const wasComplete = t.status === 'complete';
+
   const result = await openModal('Edit task', [
     { label: 'Task', name: 'task', value: t.task, required: true },
+    { label: 'Description', name: 'description', value: t.description || '', type: 'textarea', placeholder: 'Additional context, actions, decisions…' },
     { label: 'Owner', name: 'owner', value: t.owner },
     { label: 'Due date', name: 'due', value: t.due, type: 'date' },
     { label: 'Status', name: 'status', value: t.status, type: 'select', options: [
@@ -1167,18 +1187,49 @@ async function editNextStep(id) {
       { value: 'in_progress', label: 'In progress' },
       { value: 'complete', label: 'Complete' },
     ]},
+    { label: 'Completed date', name: 'completedDate', value: t.completedDate || '', type: 'date' },
     { label: 'Linked epics (comma-separated keys, e.g. BEESEDI-48927)', name: 'epicKeys', value: (t.epicKeys || []).join(', ') },
   ]);
   if (!result) return;
+
+  const nowComplete = result.status === 'complete';
+  const justCompleted = !wasComplete && nowComplete;
+  // Auto-set completedDate when newly completed; let user override via form
+  const completedDate = nowComplete
+    ? (result.completedDate || (justCompleted ? todayISO() : t.completedDate || todayISO()))
+    : '';
+
   Object.assign(t, {
     task: result.task,
+    description: result.description || '',
     owner: result.owner,
     due: result.due,
     status: result.status,
+    completedDate,
     epicKeys: parseEpicKeysInput(result.epicKeys),
   });
   saveSection('next-steps');
+
+  if (justCompleted) {
+    autoCreateUpdateFromTask({ task: result.task, description: result.description, epicKeys: result.epicKeys, completedDate });
+  }
   renderAll();
+}
+
+function autoCreateUpdateFromTask({ task, description, epicKeys, completedDate }) {
+  if (!state.updates) return;
+  const summary = description?.trim() || `Task completed: ${task}`;
+  state.updates.updates.unshift({
+    id: uid('U'),
+    title: task,
+    date: completedDate || todayISO(),
+    audience: 'Product',
+    summary,
+    decisions: [],
+    actionItems: [],
+    epicKeys: parseEpicKeysInput(epicKeys),
+  });
+  saveSection('updates');
 }
 
 function deleteNextStep(id) {

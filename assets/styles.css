@@ -709,6 +709,18 @@ a { color: var(--primary); text-decoration: none; }
 .pg-ellipsis { color: var(--text-muted); font-size: 12px; padding: 0 2px; line-height: 28px; }
 .pg-info { color: var(--text-muted); font-size: 11px; margin-left: 8px; }
 
+/* Task description secondary line */
+.ns-task-desc {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* ---------- Next steps table ---------- */
 .next-steps-table { width: 100%; border-collapse: collapse; font-size: 12px; }
 .next-steps-table th, .next-steps-table td {
