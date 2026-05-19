@@ -266,6 +266,62 @@
       "epicKeys": ["BEESIP-31064"]
     },
     {
+      "id": "NS-MX-PO-FILES",
+      "task": "Karla to share example PO files for OXXO and Extra — including frontier-zone orders with tax discrepancies (8% vs 16%) to validate price field presence across retailers",
+      "owner": "Karla Mendoza",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48955", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-MX-FOLLOWUP-SESSION",
+      "task": "Karla to schedule follow-up session with Jason for week of May 19 to cover remaining open questions (switch hierarchy, OXXO T4 roadmap, SEDIS process documentation)",
+      "owner": "Karla Mendoza",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48929", "BEESEDI-48927", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-MX-HOLD-TIME-ALFREDO",
+      "task": "Validate order hold time threshold (2–3 days) for blocked orders with Alfredo (operations) — Jason's suggestion is a starting point; final value needed before implementing auto-rejection logic",
+      "owner": "Jason / Karla",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESIP-31064", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-RENAN-SAP-REQUIREMENTS",
+      "task": "Compile full requirements list ('Santa Claus letter') detailing all data fields BEES needs from SAP — RFC for POC ID, UPC-SKU Z-pack table, T4 origin_type for OXXO — and share with Karla, Jason, and Mac",
+      "owner": "Renan",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48927", "BEESEDI-48947", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-MAC-SAP-SCOPE",
+      "task": "Align with Mac on SAP team effort not covered in Karla's current quotation — RFC field addition to SAP→BEES account integration and UPC-SKU table extraction scope",
+      "owner": "Renan",
+      "due": "2026-05-26",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48927", "BEESEDI-48947", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-SWITCH-HIERARCHY",
+      "task": "Define prevalence/hierarchy rules for BRE switch on/off when configured at multiple levels (e.g., sales office vs. store/POC level) — open point, needs a defined convention before build starts",
+      "owner": "Renan / Jason / Architecture",
+      "due": "2026-06-01",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48947", "BEESEDI-48955", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-MX-KARLA-QUOTATIONS",
+      "task": "Karla to continue gathering integration quotations from all areas (Pegaso, SAP team, etc.) for the full BEES Link integration puzzle",
+      "owner": "Karla Mendoza",
+      "due": "2026-06-01",
+      "status": "not_started",
+      "epicKeys": ["BEESIP-33217", "BEESIP-33218"]
+    },
+    {
       "id": "NS-L2-DISCOVERY-ASSIGN",
       "task": "Assign product and engineering owners for BEESEDI-48954 (Packaging matching) and BEESEDI-48955 (Price range validation) — both moved to In Product Discovery on May 19",
       "owner": "Renan / Pamela",

@@ -2,6 +2,34 @@
   "_comment": "Updates compiled from Granola meeting notes for the BRE initiative. epicKeys link an update to one or more epics/initiatives in epics.json (Jira keys).",
   "updates": [
     {
+      "id": "U-2026-05-15-mx-business-rules-qa",
+      "date": "2026-05-15",
+      "audience": "Commercial",
+      "title": "[MX] EDI/BRE Business Rules Q&A — delivery models, POC ID, UPC mapping, tax, switch config",
+      "summary": "Joint session with Karla Mendoza and Jason Marroquin to validate Mexico-specific business rules for the EDI validator. Covered delivery type logic (T2/T4/SEDIS), POC identification method, UPC→SKU mapping complexity, tax zone validation (8% vs 16%), switch on/off configuration granularity, the ops dashboard concept (Accepted / Needs Attention / Blocked), and integration scope with Pegaso/SAP.",
+      "decisions": [
+        "T4 (retailer-pickup) and SEDIS orders are exempt from max order quantity, min order quantity, and max adjustment rules",
+        "POC identification will use RFC + internal SAP store/vendor ID — not provider code, not GLN",
+        "GLN adoption as primary identifier not pursued due to retailer-change complexity",
+        "UPCs are the universal product identifier across all Mexican retailers in EDI orders",
+        "MOQ switch on/off granularity: Sales Office + Retailer composite key (not sales center, no per-store blacklist)",
+        "Order hold time for blocked orders: ~2–3 days maximum (to be confirmed with Alfredo in operations)",
+        "Front-end admin configuration for hold time is out of scope for 2026 — changes via ticket/code initially",
+        "UPC-SKU matching (Z-pack table) will be handled via manual CSV import into BEES as first step — no new SAP integration required immediately",
+        "Only Extra currently has the T4 origin_type field populated; OXXO T4 orders handled manually by operations staff"
+      ],
+      "actionItems": [
+        "Karla: share example PO files for OXXO and Extra including ones with frontier-zone tax discrepancies",
+        "Karla: schedule follow-up session with Jason for the week of May 19 to cover remaining open questions",
+        "Karla: continue gathering quotations from all areas for the BEES Link integration puzzle",
+        "Jason / Karla: validate order hold time threshold (2–3 days) with Alfredo (operations)",
+        "Renan: compile full requirements list detailing all data fields BEES needs from SAP (RFC, UPC-SKU table, etc.) and share with Karla, Jason, and Mac",
+        "Renan: align with Mac on SAP team effort not covered in the current Karla quotation",
+        "Team: define prevalence/hierarchy rules for switch on/off when configured at multiple levels — bring to next joint session"
+      ],
+      "epicKeys": ["BEESEDI-48927", "BEESEDI-48947", "BEESEDI-48955", "BEESEDI-48929", "BEESIP-33217", "BEESIP-31064"]
+    },
+    {
       "id": "U-2026-05-19-upc-hlr",
       "date": "2026-05-19",
       "audience": "Product",
