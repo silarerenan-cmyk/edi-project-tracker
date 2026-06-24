@@ -2,6 +2,90 @@
   "_comment": "Updates compiled from Granola meeting notes for the BRE initiative. epicKeys link an update to one or more epics/initiatives in epics.json (Jira keys).",
   "updates": [
     {
+      "id": "U-2026-06-23-edi-bre-pricing",
+      "date": "2026-06-23",
+      "audience": "Architecture",
+      "title": "[EDI/BRE] EDI ↔ Pricing — enforcement + negotiatedFinalPrice path",
+      "summary": "Pricing onboarding session aligned EDI price tolerance as zona-defined adjustment within a band (not promotions). Leading candidate: BRE validates via enforcement (max-min price) then passes negotiatedFinalPrice to simulation/order creation — taxes and charges stay on catalog base price. Flex parallel exists but upward adjustments need price adjustment, not discount. negotiatedFinalPrice delivered in Q2.",
+      "decisions": [
+        "EDI tolerance is price adjustment within a zona band — order-level, not permanent catalog update",
+        "Leading path: enforcement validation → negotiatedFinalPrice on order creation without full tax/charge recalculation",
+        "Premise to validate: small deviations (cents) acceptable with taxes/charges on catalog base",
+        "No Flex deal prerequisite required for negotiatedFinalPrice enforcement"
+      ],
+      "actionItems": [
+        "Gabriel Gomes: send simulation request example with negotiatedFinalPrice",
+        "Rafael Rhormens: study enforcement + simulation integration for BRE order creation",
+        "Renan: confirm with MX/AR zonas that not recalculating taxes on small deviations is acceptable",
+        "Gabriel Gomes: share menu-order documentation for simulation parameters BRE can use"
+      ],
+      "epicKeys": ["BEESEDI-48955", "BEESPR-27253", "BEESIP-33218"]
+    },
+    {
+      "id": "U-2026-06-22-mx-price-packaging",
+      "date": "2026-06-22",
+      "audience": "Commercial",
+      "title": "México — pack size, inforecord, and price condition classes",
+      "summary": "Deep discovery with Carlos Pallares on México SAP parametrization: pack size drives price conversion only; inforecord (per SKU + solicitante) drives quantity conversion; condition classes define which price type retailers send. BEES catalog lacks per-client pack/inforecord variation — Barrilito example shows uniform 24 units for all clients. EAN/UPC epic proceeds; qty + price validation blocked until architecture decision.",
+      "decisions": [
+        "Pack size and inforecord are separate dimensions — must not be conflated",
+        "Price formula: retailer_unit_price × pack_size_factor vs BEES price per box",
+        "Quantity formula: retailer_qty × inforecord_factor = boxes — ignore retailer UOM alone",
+        "Condition classes configured at solicitante level (8 OXXO parents), not chain level",
+        "Solicitante is not mapped to DDC/plant in México model"
+      ],
+      "actionItems": [
+        "Carlos Pallares: email SAP tables, clases de condición definitions, and worked examples",
+        "Renan: draft HLR for quantity conversion and price comparison",
+        "Renan + Rhormens: architecture session incorporating packaging rules alongside EAN HLS"
+      ],
+      "epicKeys": ["BEESEDI-48954", "BEESEDI-48955", "BEESEDI-48947", "BEESIP-33218"]
+    },
+    {
+      "id": "U-2026-06-22-edi-weekly",
+      "date": "2026-06-22",
+      "audience": "Engineering",
+      "title": "EDI/Order Validator Product/Eng Weekly — UPC, PO Reader, Flex dates",
+      "summary": "Weekly sync covered Identity API prioritization signal, two-path UPC matching (catalog + PO Reader fallback), PO Reader microservice endpoint gap, México pricing/packaging debrief, and Flex release dates. MVP curation via Bees One PO Reader portal agreed; in-hub curation is post-MVP evolution.",
+      "decisions": [
+        "PO Reader Bees One portal is MVP path for UPC ↔ SKU mapping maintenance",
+        "BRE will request new PO Reader endpoint (SEC identifier + POC ID) for programmatic lookup",
+        "MVP failure: unrecognized UPC → Central Tracking notification; BU owns resolution via Bees One",
+        "Flex external commitment: August 18 preferred over August 4 (Pam not comfortable with earlier date)",
+        "No agreement to replicate México SAP tables or switch to catalog-only pricing in this call"
+      ],
+      "actionItems": [
+        "Renan: provide Identity team concrete México data consumption start date",
+        "Renan + Harmys: map end-to-end PO Reader lookup flow for architecture review",
+        "Renan: formalize PO Reader endpoint request to PO team",
+        "Renan: document curation product evolution (MVP → hub link → in-hub curation)",
+        "Tanaka: share August 18 Flex release date with Luisa and stakeholders"
+      ],
+      "epicKeys": ["BEESEDI-48947", "BEESCM-2265", "BEESIP-33217", "BEESIP-33218", "BEESIP-31064"]
+    },
+    {
+      "id": "U-2026-06-17-bre-checkpoint",
+      "date": "2026-06-17",
+      "audience": "Engineering",
+      "title": "[EDI/BRE] Weekly checkpoint 6/17 — Q3 epics, Identity, Sync, assortment",
+      "summary": "Q3 initiative cleanup: duplicate Platform epic to be unified and cancelled. México follows Argentina flow; ranking 6–7 acceptable for Platform pipeline. Identity (Pampa) endpoint slipped to next sprint — blocks México close (~20 Jul effective week). Sync in test; squad owes queue wiring and validation session with Sync testers. Assortment/account-level resolution preferred over platform-only matching.",
+      "decisions": [
+        "HLS remains canonical spec; epic stays execution-oriented for Platform",
+        "Reprocessing stays in Central Tracking narrative — not BRE epic scope for now",
+        "DUM14/DUM13 pack vs unit mismatch: reject with strong logging — no auto-conversion at first",
+        "Assortment + account-level resolution preferred to reduce Oxxo-style ambiguity",
+        "Sync contract payload shape confirmed as array (not object)"
+      ],
+      "actionItems": [
+        "Renan: unify Platform epic and cancel duplicate",
+        "Renan: re-engage Identity with HLR/HLS package for next-sprint execution",
+        "Karen: align with Sync TPM and schedule ingestion/consumption validation session",
+        "Squad: open ticket for Sync queue wiring; prepare test mass",
+        "Renan + Rorms: joint HLR/HLS review for assortment/account approach — Argentina-first"
+      ],
+      "epicKeys": ["BEESIG-13405", "BEESCM-2265", "BEESEDI-48927", "BEESEDI-48947", "BEESIP-33217", "BEESIP-33218", "BEESIP-31064"]
+    },
+    {
       "id": "U-2026-05-15-mx-business-rules-qa",
       "date": "2026-05-15",
       "audience": "Commercial",

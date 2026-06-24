@@ -1,8 +1,8 @@
 {
   "name": "EDI Order Validator & Business Rules Engine",
   "tagline": "Order validation scope — translate and validate EDI orders inside BEES so retailers get feedback, NR is captured, and processes are standardized across markets.",
-  "status": "In Discovery",
-  "owner": "Your Name",
+  "status": "In Implementation",
+  "owner": "Silva, Renan",
   "startDate": "2026-01-01",
   "targetDate": "2026-12-31",
   "stakeholders": ["Engineering", "Architecture", "Commercial", "Partners"],

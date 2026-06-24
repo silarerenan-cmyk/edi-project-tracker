@@ -1,5 +1,5 @@
 {
-  "_comment": "Initiatives (BEESIP-*) and their child epics. The dashboard groups epics into Discovery / Delivery using the phaseFromStatus mapping.",
+  "_comment": "Initiatives (BEESIP-*) and their child epics. The dashboard groups epics into Discovery / Delivery using the phaseFromStatus mapping. Synced from Jira 2026-06-23.",
 
   "phaseFromStatus": {
     "Open":                            "discovery",
@@ -10,10 +10,13 @@
     "In High Level Solution":          "discovery",
     "Ready for Story Detailing":       "discovery",
     "In Story Detailing":              "discovery",
+    "In Scoping":                      "discovery",
+    "On Hold":                         "discovery",
     "Ready for Development":           "delivery",
     "Ready for Implementation":        "delivery",
     "In Development":                  "delivery",
     "In Implementation":               "delivery",
+    "In Progress":                     "delivery",
     "In SIT Tests":                    "delivery",
     "Ready for UAT Tests":             "delivery",
     "In UAT Tests":                    "delivery",
@@ -21,10 +24,7 @@
     "In Hypercare and Feedback":       "delivery",
     "In Production":                   "delivery",
     "Activated":                       "delivery",
-    "Cancelled":                       "excluded",
-    "On Hold":                         "discovery",
-    "In Scoping":                      "discovery",
-    "In Product Discovery":            "discovery"
+    "Cancelled":                       "excluded"
   },
 
   "initiatives": [
@@ -41,7 +41,7 @@
       "key": "BEESIP-33218",
       "title": "EDI Order validator MVP — Layer 2 (Product level)",
       "summary": "SKU identification, packaging matching, and price compliance. Failure removes affected products from the order.",
-      "owner": "Unassigned",
+      "owner": "Silva, Renan",
       "status": "In Scoping",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIP-33218",
       "targetQuarter": "Q3"
@@ -50,8 +50,8 @@
       "key": "BEESIP-33219",
       "title": "EDI Order validator MVP — Layer 3 (Volume level)",
       "summary": "Minimum and maximum order quantities to ensure supply and logistics viability. Failure rejects the entire order.",
-      "owner": "Unassigned",
-      "status": "Backlog",
+      "owner": "Sousa, Pamela",
+      "status": "In Ideation",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIP-33219",
       "targetQuarter": "Q3"
     },
@@ -60,9 +60,9 @@
       "title": "EDI — Central Tracking Hub",
       "summary": "Track every EDI validation decision (approve/reject) and its context, with retailer/KAM analytics, dispute evidence, and SLA reporting.",
       "owner": "Bazzo, Natana",
-      "status": "In Ideation",
+      "status": "In Scoping",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIP-31064",
-      "targetQuarter": "Q4"
+      "targetQuarter": "Q3"
     }
   ],
 
@@ -73,8 +73,8 @@
       "shortTitle": "Order integration",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In SIT Tests",
-      "owner": "Rhormens, Rafael",
+      "status": "Ready for Prod",
+      "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48925",
       "targetQuarter": "Q2"
     },
@@ -84,53 +84,119 @@
       "shortTitle": "Cart Service — process EDI orders",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "Ready for Prod",
+      "status": "In Production",
       "owner": "Souza Rodrigues, Juliana",
       "url": "https://ab-inbev.atlassian.net/browse/BEESCR-27918",
       "targetQuarter": "Q2"
     },
     {
       "key": "BEESEDI-48927",
-      "title": "[BE] EDI order validator MVP — Match POC identifier",
-      "shortTitle": "Match POC identifier",
+      "title": "[BEES Link][BE] [AR] EDI order validator MVP — Match POC identifier",
+      "shortTitle": "Match POC identifier (AR)",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "Ready for High Level Solution",
-      "owner": "Rhormens, Rafael",
+      "status": "In SIT Tests",
+      "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48927",
       "targetQuarter": "Q2"
     },
     {
+      "key": "BEESEDI-53592",
+      "title": "[BE][MX] EDI Order Validation MVP — Match POC identifier",
+      "shortTitle": "Match POC identifier (MX)",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "Backlog",
+      "owner": "Silva, Renan",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-53592",
+      "targetQuarter": "Q3"
+    },
+    {
       "key": "BEESEDI-48929",
-      "title": "[BE] EDI order validator MVP — Delivery dates validation",
+      "title": "[BEES Link][BE] EDI order validator MVP — Delivery dates validation",
       "shortTitle": "Delivery dates validation",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In High Level Solution",
-      "owner": "Rhormens, Rafael",
+      "status": "Ready for Prod",
+      "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48929",
       "targetQuarter": "Q2"
     },
     {
       "key": "BEESEDI-48956",
-      "title": "EDI order validator MVP — Purchase number uniqueness",
+      "title": "[BEES Link] EDI order validator MVP — Purchase number uniqueness",
       "shortTitle": "Purchase number uniqueness",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In Development",
-      "owner": "Sousa, Pamela",
+      "status": "Ready for Prod",
+      "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48956",
       "targetQuarter": "Q2"
     },
     {
       "key": "BEESIG-13405",
-      "title": "[Q2.26] EDI order validator MVP — EDI Entity on BEES Sync",
+      "title": "[Contract][Q2.26] [BEES Link] EDI order validator MVP — EDI Entity on BEES Sync",
       "shortTitle": "EDI Entity on BEES Sync",
       "type": "Epic",
       "parentKey": "BEESIP-33217",
-      "status": "In Story Detailing",
+      "status": "Ready for UAT Tests",
       "owner": "Soares Gonzalez, Natalia",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIG-13405",
+      "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESCM-2265",
+      "title": "[Company][MX] EDI order validator MVP — Search accounts using documents combination as filter",
+      "shortTitle": "MX account search (Identity)",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "Backlog",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESCM-2265",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEXT-714",
+      "title": "[MX][Adoption]",
+      "shortTitle": "MX Adoption",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "In Progress",
+      "owner": "Sousa, Pamela",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEXT-714",
+      "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESEXT-715",
+      "title": "[AR][Adoption]",
+      "shortTitle": "AR Adoption",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "In Progress",
+      "owner": "Sousa, Pamela",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEXT-715",
+      "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESEDI-48928",
+      "title": "[BEES Link] EDI order validator MVP — Match provider identifier",
+      "shortTitle": "Match provider identifier",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "Cancelled",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48928",
+      "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESEDI-49482",
+      "title": "[BEES Link] EDI Order validator MVP — PO reader",
+      "shortTitle": "PO reader (placeholder)",
+      "type": "Epic",
+      "parentKey": "BEESIP-33217",
+      "status": "Cancelled",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-49482",
       "targetQuarter": "Q2"
     },
     {
@@ -146,13 +212,57 @@
     },
     {
       "key": "BEESEDI-48947",
-      "title": "EDI order validator MVP — UPC matching",
+      "title": "[Q3-26][BEES Link] EDI order validator MVP — UPC matching",
       "shortTitle": "UPC matching",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
       "status": "Ready for High Level Solution",
-      "owner": "Unassigned",
+      "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48947",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEDI-48954",
+      "title": "[Q3-26][BEES Link] EDI order validator MVP — Packaging matching",
+      "shortTitle": "Packaging matching",
+      "type": "Epic",
+      "parentKey": "BEESIP-33218",
+      "status": "In Product Discovery",
+      "owner": "Silva, Renan",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48954",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEDI-48955",
+      "title": "[Q3-26][BEES Link] EDI order validator MVP — Price range validation",
+      "shortTitle": "Price range validation",
+      "type": "Epic",
+      "parentKey": "BEESIP-33218",
+      "status": "In Product Discovery",
+      "owner": "Silva, Renan",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48955",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEDI-52518",
+      "title": "[Q3-26][BEES Link] EDI order validator MVP — POC matching using external IDs (GLN, RFC, and Subsidiary)",
+      "shortTitle": "POC matching — external IDs",
+      "type": "Epic",
+      "parentKey": "BEESIP-33218",
+      "status": "Backlog",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-52518",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESPR-27253",
+      "title": "[Price] Pricing Assessment — Discrepancy Acceptance & Impact Analysis",
+      "shortTitle": "Pricing assessment (Flex/enforcement)",
+      "type": "Epic",
+      "parentKey": "BEESIP-33218",
+      "status": "Backlog",
+      "owner": "Slywitch, Victor",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESPR-27253",
       "targetQuarter": "Q3"
     },
     {
@@ -161,31 +271,20 @@
       "shortTitle": "UPC translation management",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
-      "status": "Backlog",
+      "status": "Cancelled",
       "owner": "Unassigned",
       "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48953",
       "targetQuarter": "Q3"
     },
     {
-      "key": "BEESEDI-48954",
-      "title": "EDI order validator MVP — Packaging matching",
-      "shortTitle": "Packaging matching",
+      "key": "BEESID-41783",
+      "title": "[BEES Platform][Q3-26] EDI order validator MVP — Search accounts using documents combination as filter",
+      "shortTitle": "Platform account search (cancelled)",
       "type": "Epic",
       "parentKey": "BEESIP-33218",
-      "status": "In Product Discovery",
+      "status": "Cancelled",
       "owner": "Unassigned",
-      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48954",
-      "targetQuarter": "Q3"
-    },
-    {
-      "key": "BEESEDI-48955",
-      "title": "EDI order validator MVP — Price range validation",
-      "shortTitle": "Price range validation",
-      "type": "Epic",
-      "parentKey": "BEESIP-33218",
-      "status": "In Product Discovery",
-      "owner": "Unassigned",
-      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-48955",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESID-41783",
       "targetQuarter": "Q3"
     },
     {
@@ -198,6 +297,61 @@
       "owner": "Silva, Renan",
       "url": "https://ab-inbev.atlassian.net/browse/BEESIP-34209",
       "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESEDI-52538",
+      "title": "[Q3-26][BEES Link] EDI order validator MVP — DC validation (AR)",
+      "shortTitle": "DC validation (AR)",
+      "type": "Epic",
+      "parentKey": "BEESIP-33219",
+      "status": "Backlog",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-52538",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEDI-51859",
+      "title": "[Q3-26][BEES Link] EDI Central Tracking — Self-Service Order Visibility for Retailers",
+      "shortTitle": "Central Tracking — retailer self-service",
+      "type": "Epic",
+      "parentKey": "BEESIP-31064",
+      "status": "In Product Discovery",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-51859",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESEDI-51860",
+      "title": "[Q3-26][BEES Link] EDI Central Tracking — Operational Tool for Vendor Operations Teams",
+      "shortTitle": "Central Tracking — vendor ops tool",
+      "type": "Epic",
+      "parentKey": "BEESIP-31064",
+      "status": "In Product Discovery",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESEDI-51860",
+      "targetQuarter": "Q3"
+    },
+    {
+      "key": "BEESDGT-56798",
+      "title": "[Design Q2 2026 WEB] EDI tracking hub",
+      "shortTitle": "Design — EDI tracking hub",
+      "type": "Epic",
+      "parentKey": "BEESIP-31064",
+      "status": "In Progress",
+      "owner": "Litaiff, Kareen",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESDGT-56798",
+      "targetQuarter": "Q2"
+    },
+    {
+      "key": "BEESIG-13775",
+      "title": "[Platform] placeholder",
+      "shortTitle": "Platform placeholder",
+      "type": "Epic",
+      "parentKey": "BEESIP-31064",
+      "status": "Backlog",
+      "owner": "Unassigned",
+      "url": "https://ab-inbev.atlassian.net/browse/BEESIG-13775",
+      "targetQuarter": "Q3"
     }
   ]
 }

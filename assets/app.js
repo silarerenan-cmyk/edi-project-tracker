@@ -7,7 +7,7 @@ const OVERLAY_PREFIX = STORAGE_PREFIX + 'overlay:';
 
 // Schema version — bump when data shape changes so cached `disk:*` snapshots are invalidated.
 // Overlays (manual additions / edits / deletions) are NEVER cleared by a version bump.
-const SCHEMA_VERSION = 14;
+const SCHEMA_VERSION = 15;
 
 // Sections whose `updates`/`tasks` arrays support manual overlays (add/edit/delete that survives a refresh).
 const OVERLAYABLE = {
@@ -308,9 +308,22 @@ function openModal(title, fields, { saveLabel = 'Save' } = {}) {
 
 function renderOverviewSummary() {
   const o = state.overview || {};
-  $('#brandTitle').textContent = o.name || 'Initiative';
-  $('#brandSub').textContent = `${o.status ?? '—'} · Owner: ${o.owner ?? '—'}`;
-  $('#overviewSummary').innerHTML = `<p class="overview-tagline">${escapeHtml(o.tagline || '')}</p>`;
+  const epics = state.epics || {};
+  const initiatives = epics.initiatives || [];
+  const epicList = (epics.epics || []).filter(e => phaseFromStatus(e.status) !== 'excluded');
+  const deliveryCount = epicList.filter(e => phaseFromStatus(e.status) === 'delivery').length;
+  const discoveryCount = epicList.filter(e => phaseFromStatus(e.status) === 'discovery').length;
+
+  $('#brandTitle').innerHTML = `${escapeHtml(o.name || 'EDI Initiative Tracker')} <em>2026</em>`;
+  $('#brandSub').textContent = o.tagline || '';
+  $('#heroMeta').innerHTML = `
+    <span><strong>Status</strong> ${escapeHtml(o.status ?? '—')}</span>
+    <span><strong>Owner</strong> ${escapeHtml(o.owner ?? '—')}</span>
+    <span><strong>Initiatives</strong> ${initiatives.length}</span>
+    <span><strong>Epics</strong> ${epicList.length} <span class="meta-dim">(${deliveryCount} delivery · ${discoveryCount} discovery)</span></span>
+    <span><strong>Synced</strong> 23 Jun 2026</span>
+  `;
+  $('#overviewSummary').innerHTML = '';
 }
 
 function renderFlow(flow, highlightIdx) {

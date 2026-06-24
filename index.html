@@ -3,20 +3,27 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>EDI Project Tracker</title>
-  <link rel="stylesheet" href="assets/styles.css?v=14" />
+  <title>EDI Initiative Tracker — BEES Link</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css?v=15" />
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-mark"></div>
-        <div>
-          <div class="brand-title" id="brandTitle">EDI Project</div>
-          <div class="brand-sub" id="brandSub">Loading…</div>
+  <header class="hero" id="siteHero">
+    <svg class="hero-stripes" viewBox="0 0 2120 1280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#FFFF00" d="M2629.9,1283.4L1106.5,752.8H-495.7v-90.3h1602.3l1504.3,88.5L2629.9,1283.4z M2633.7,1551L1106.5,797.9H-495.7v90.3h1602.3l1390.9,1088.5L2633.7,1551z M2609,3.8L1106.5,527.2H-495.7v90.3h1602.3l1497.3-88.1L2609,3.8z M2278.7-525.6L1106.5,391.8H-495.7v90.3h1602.3l1414.3-697.4L2278.7-525.6z"/></svg>
+    <svg class="hero-bee" viewBox="0 0 929.69 809.84" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="#fff" d="M280,542.9c-87.4,36-172.7-24-172.7-116.5 0-93.2,97.4-129.3,179.6-188.3-28.3,37.8-37.1,72-38.5,76-13,43.2-13.9,89.6-3.6,136.2C247.1,459.7,254,494.9,280,542.9z M643.1,238.1c17.3,23.2,30.3,48.7,38.5,76 17.5,58.9,9.4,109.5,3.6,136.2-7.2,32.5-19.4,63.3-35.2,92.6 87.4,36,172.7-24,172.7-116.5C822.7,333.3,725.3,297.2,643.1,238.1z"/><path d="M286.9,238.1c0.9-0.9-0.5-130.2,178.1-130.6 179.1,0.5,177.3,130.6,178.1,130.6C582.3,286.9,346,288,286.9,238.1z M465,702.3c28.4,0,135.7-68.3,185-159.4-89.2,65.3-283.9,66.4-369.9,0.1C325.3,629.8,435.3,702.3,465,702.3z M681.6,314.1c-4.3,3.7-64.4,53.3-215.7,53.7-156.7-0.4-217.3-53.4-217.6-53.7-13,43.2-13.9,89.6-3.6,136.2 1.7,1.7,66.2,63.2,221.2,63.7 142.6-0.4,208.4-54.1,219.3-63.7C691,423.7,699.1,373,681.6,314.1z"/><path fill="#FFFF00" d="M465.9,367.8c-156.7-0.4-217.3-53.4-217.6-53.7 1.5-4,10.2-38.2,38.5-76 59.1,49.9,295.4,48.8,356.2,0 17.4,23.2,30.3,48.8,38.5,76C677.3,317.9,617.2,367.5,465.9,367.8z M685.2,450.3c-10.9,9.6-76.7,63.3-219.3,63.7-155-0.5-219.5-62-221.2-63.7 2.4,9.4,9.3,44.6,35.3,92.7 86,66.4,280.8,65.2,369.9-0.1C665.8,513.6,678,482.9,685.2,450.3z"/></svg>
+    <div class="hero-inner">
+      <div class="hero-top">
+        <span class="hero-badge">BEES Link · EDI 2026</span>
+        <div class="hero-actions">
+          <button class="btn btn-hero" id="themeToggle" title="Toggle theme">Theme</button>
+          <button class="btn btn-hero" id="resetBtn" title="Reset to JSON files">Reset</button>
         </div>
       </div>
-      <nav class="nav">
+      <h1 class="hero-title" id="brandTitle">EDI Initiative Tracker</h1>
+      <p class="hero-sub" id="brandSub">Loading…</p>
+      <div class="hero-meta" id="heroMeta"></div>
+      <nav class="hero-nav" aria-label="Sections">
         <a href="#overview">Overview</a>
         <a href="#backlog">Backlog</a>
         <a href="#roadmap">Roadmap</a>
@@ -24,10 +31,6 @@
         <a href="#updates">Updates</a>
         <a href="#next-steps">Next steps</a>
       </nav>
-      <div class="topbar-actions">
-        <button class="btn btn-ghost" id="themeToggle" title="Toggle theme">Theme</button>
-        <button class="btn btn-ghost" id="resetBtn" title="Reset to JSON files">Reset</button>
-      </div>
     </div>
   </header>
 
@@ -302,6 +305,6 @@
     </div>
   </aside>
 
-  <script src="assets/app.js?v=14" type="module"></script>
+  <script src="assets/app.js?v=15" type="module"></script>
 </body>
 </html>

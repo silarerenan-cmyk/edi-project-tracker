@@ -2,10 +2,90 @@
   "_comment": "Open action items extracted from Granola meeting notes. Status: not_started | in_progress | complete. epicKeys link a task to one or more epics/initiatives in epics.json.",
   "tasks": [
     {
+      "id": "NS-PRICING-ENFORCEMENT-PATH",
+      "task": "Define BRE flow: enforcement max-min price validation → negotiatedFinalPrice on order creation (Rhormens + Gabriel Gomes)",
+      "owner": "Rhormens, Rafael / Gabriel Gomes",
+      "due": "2026-07-04",
+      "status": "in_progress",
+      "epicKeys": ["BEESEDI-48955", "BEESPR-27253", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-MX-ZONA-PRICE-SIGNOFF",
+      "task": "Confirm with México and Argentina zonas that taxes/charges staying on catalog base during small EDI price deviations is acceptable",
+      "owner": "Renan",
+      "due": "2026-07-04",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48955", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-MX-PACKAGING-HLR",
+      "task": "Draft HLR for México quantity conversion (inforecord) and price comparison (pack size + condition classes); obtain SAP table samples from Payares/Pallares",
+      "owner": "Renan",
+      "due": "2026-07-04",
+      "status": "in_progress",
+      "epicKeys": ["BEESEDI-48954", "BEESEDI-48955", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-PO-READER-ENDPOINT",
+      "task": "Formalize PO Reader microservice endpoint request (SEC identifier + POC ID search) — current file-only entry point insufficient for EDI",
+      "owner": "Renan / Harmys",
+      "due": "2026-07-04",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-IDENTITY-DATE-SIGNAL",
+      "task": "Provide Identity team a concrete usage/start date signal for México data endpoint to unblock prioritization",
+      "owner": "Renan",
+      "due": "2026-06-30",
+      "status": "in_progress",
+      "epicKeys": ["BEESCM-2265", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-FLEX-AUG18",
+      "task": "Close Flex open points and final design; communicate August 18 release date to Luisa and stakeholders (Price Center planning)",
+      "owner": "Pamela / Tanaka",
+      "due": "2026-07-11",
+      "status": "in_progress",
+      "epicKeys": ["BEESPR-27253", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-SYNC-VALIDATION-SESSION",
+      "task": "Schedule Sync ingestion/consumption validation session after TPM alignment — squad provides test mass and queue connection",
+      "owner": "Karen",
+      "due": "2026-06-30",
+      "status": "in_progress",
+      "epicKeys": ["BEESIG-13405", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-PLATFORM-EPIC-UNIFY",
+      "task": "Unify duplicate Platform epic with existing epics and cancel redundant copy",
+      "owner": "Renan",
+      "due": "2026-06-24",
+      "status": "in_progress",
+      "epicKeys": ["BEESIG-13405", "BEESIP-33217"]
+    },
+    {
+      "id": "NS-CURATION-EVOLUTION-DOC",
+      "task": "Document curation product evolution: MVP Bees One portal → hub link → in-hub curation + resubmit",
+      "owner": "Renan",
+      "due": "2026-06-30",
+      "status": "not_started",
+      "epicKeys": ["BEESEDI-48947", "BEESIP-31064", "BEESIP-33218"]
+    },
+    {
+      "id": "NS-CT-DESIGN-KAREEN",
+      "task": "Continue EDI tracking hub design work (BEESDGT-56798) — Kareen Litaiff, In Progress",
+      "owner": "Litaiff, Kareen",
+      "due": "2026-07-15",
+      "status": "in_progress",
+      "epicKeys": ["BEESDGT-56798", "BEESIP-31064"]
+    },
+    {
       "id": "NS-MX-POC-PLATFORM",
-      "task": "Resolve Solution A vs B for BEESEDI-48927 (Match POC identifier) with the platform team — epic still in Ready for High Level Solution pending final architecture decision",
-      "owner": "Rhormens, Rafael / Platform team",
-      "due": "2026-05-26",
+      "task": "BEESEDI-48927 (AR Match POC identifier) in SIT Tests — close remaining issues; BEESEDI-53592 (MX) in Backlog pending Identity endpoint",
+      "owner": "Silva, Renan",
+      "due": "2026-07-04",
       "status": "in_progress",
       "epicKeys": ["BEESEDI-48927"]
     },
@@ -211,9 +291,9 @@
     },
     {
       "id": "NS-SIT-CLOSE-48925",
-      "task": "Close remaining SIT issues on BEESEDI-48925 (Order integration) and prepare for UAT test cycle following May 12 joint validation session with Cart Checkout team",
-      "owner": "Rhormens, Rafael",
-      "due": "2026-05-30",
+      "task": "BEESEDI-48925 (Order integration) reached Ready for Prod — complete UAT and production release coordination",
+      "owner": "Silva, Renan",
+      "due": "2026-06-30",
       "status": "in_progress",
       "epicKeys": ["BEESEDI-48925"]
     },
@@ -227,9 +307,9 @@
     },
     {
       "id": "NS-BEESEDI-48947-HLS",
-      "task": "Advance BEESEDI-48947 (UPC matching) through the High Level Solution phase — HLR complete (May 19), architecture diagrams pending; stories BEESEDI-52094..52102 ready for estimation",
+      "task": "BEESEDI-48947 (UPC matching) in Ready for High Level Solution — complete architecture diagrams and sprint estimation for stories BEESEDI-52094..52102",
       "owner": "Rhormens, Rafael / Architecture",
-      "due": "2026-05-30",
+      "due": "2026-07-04",
       "status": "in_progress",
       "epicKeys": ["BEESEDI-48947", "BEESIP-33218"]
     },
